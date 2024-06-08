@@ -1,28 +1,5 @@
 'use client';
 
-// import { fetchExchangeRates } from "../GlobalRedux/Slices/exchangeRatesSlice";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AppDispatch, RootState } from "../GlobalRedux/store";
-
-
-// import { useEffect } from "react";
-
-// export default function Rates() {
-
-//     const dispatch = useDispatch<AppDispatch>();
-//     const { rates, currencies, status, error } = useSelector((state: RootState) => state.exchangeRates);
-
-    
-// useEffect(()=> {
-//     dispatch(fetchExchangeRates())
-// }, [dispatch])
-
-//     return <div>
-//         <h1>RATES PAGE</h1>
-        
-//     </div>
-// }
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExchangeRates } from '../GlobalRedux/Slices/exchangeRatesSlice';
