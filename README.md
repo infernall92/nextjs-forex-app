@@ -32,7 +32,7 @@ To get started with the project, follow these steps:
 1. **Clone the repository:**
     ```bash
     git clone https://github.com/infernall92/nextjs-forex-app.git
-    cd currency-exchange-calculator
+    cd nextjs-forex-app
     ```
 
 2. **Install dependencies:**
