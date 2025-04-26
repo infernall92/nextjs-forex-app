@@ -9,7 +9,7 @@
     "lint": "next lint",
     "export": "next export",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d out --nojekyll --cname https://infernall92.github.io/nextjs-forex-app"
+    "deploy": "npm run build && npm run export && touch ./out/.nojekyll && gh-pages -d out -t true"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
