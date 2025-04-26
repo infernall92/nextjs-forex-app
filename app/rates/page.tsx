@@ -1,27 +1,33 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchExchangeRates } from '../GlobalRedux/Slices/exchangeRatesSlice';
-import { RootState, AppDispatch } from '../GlobalRedux/store';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchExchangeRates } from "../GlobalRedux/Slices/exchangeRatesSlice";
+import { RootState, AppDispatch } from "../GlobalRedux/store";
 
-import classes from "./page.module.css"
-import Link from 'next/link';
-import Error from '../error';
+import classes from "./page.module.css";
+import Link from "next/link";
+import Error from "../error";
 
 const RatesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { rates, currencies, status, error } = useSelector((state: RootState) => state.exchangeRates);
-  
+  const { rates, currencies, status, error } = useSelector(
+    (state: RootState) => state.exchangeRates
+  );
+
   const [amount, setAmount] = useState<number>(1);
-  const [fromCurrency, setFromCurrency] = useState<string>('USD');
-  const [toCurrency, setToCurrency] = useState<string>('USD');
+  const [fromCurrency, setFromCurrency] = useState<string>("USD");
+  const [toCurrency, setToCurrency] = useState<string>("USD");
   const [convertedAmount, setConvertedAmount] = useState<number | null>(null);
   const [isChanged, setIsChanged] = useState<boolean>(false);
 
   useEffect(() => {
-    (resolve) => setTimeout(resolve, 2000)
-    dispatch(fetchExchangeRates());
+    const delay = (ms: number) =>
+      new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+    delay(2000).then(() => {
+      dispatch(fetchExchangeRates());
+    });
   }, [dispatch]);
 
   const handleConvert = (e: React.FormEvent) => {
@@ -33,12 +39,12 @@ const RatesPage = () => {
     setIsChanged(false);
   };
 
-//   if (status === 'loading') {
-//     return <div>Loading...</div>;
-//   }
+  //   if (status === 'loading') {
+  //     return <div>Loading...</div>;
+  //   }
 
-  if (status === 'failed') {
-    return <Error />
+  if (status === "failed") {
+    return <Error />;
   }
 
   return (
@@ -50,7 +56,10 @@ const RatesPage = () => {
           <input
             type="number"
             value={amount}
-            onChange={(e) => {setAmount(Number(e.target.value)); setIsChanged(true)}}
+            onChange={(e) => {
+              setAmount(Number(e.target.value));
+              setIsChanged(true);
+            }}
             className={classes.input}
           />
         </div>
@@ -58,7 +67,10 @@ const RatesPage = () => {
           <label className={classes.label}>From:</label>
           <select
             value={fromCurrency}
-            onChange={(e) => {setFromCurrency(e.target.value); setIsChanged(true)}}
+            onChange={(e) => {
+              setFromCurrency(e.target.value);
+              setIsChanged(true);
+            }}
             className={classes.select}
           >
             {currencies.map((currency) => (
@@ -72,7 +84,10 @@ const RatesPage = () => {
           <label className={classes.label}>To:</label>
           <select
             value={toCurrency}
-            onChange={(e) => {setToCurrency(e.target.value); setIsChanged(true)}}
+            onChange={(e) => {
+              setToCurrency(e.target.value);
+              setIsChanged(true);
+            }}
             className={classes.select}
           >
             {currencies.map((currency) => (
@@ -82,14 +97,23 @@ const RatesPage = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className={classes.button}>Convert</button>
+        <button type="submit" className={classes.button}>
+          Convert
+        </button>
       </form>
       {convertedAmount !== null && (
         <div className={classes.result}>
-          {!isChanged && <h2>{amount} {fromCurrency} = {convertedAmount.toFixed(2)} {toCurrency}</h2>}
+          {!isChanged && (
+            <h2>
+              {amount} {fromCurrency} = {convertedAmount.toFixed(2)}{" "}
+              {toCurrency}
+            </h2>
+          )}
         </div>
       )}
-      <p><Link href='/'>Go Back</Link></p>
+      <p>
+        <Link href="/">Go Back</Link>
+      </p>
     </div>
   );
 };
